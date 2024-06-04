@@ -4,7 +4,7 @@ const app = express();
 const port = 5000 ;
 app.use(cors()) ;
 app.use(express.json()) ;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 
@@ -26,13 +26,32 @@ async function run() {
     const blogDB = client.db("blogDB");
     const blogsCollection = blogDB.collection("blogsCollection");
 
-// product routes
-app.post('/blogs', async(req, res) => {
+//=====  product routes =======
 
+// send data
+app.post('/blogs', async(req, res) => {
     const blogsData = req.body ;
     const result = await blogsCollection.insertOne(blogsData);
     res.send(result);
+}) ;
+
+// get data
+app.get('/blogs', async(req, res) => {
+    const blogsData =  blogsCollection.find();
+    const result = await blogsData.toArray() ;
+    res.send(result);
 })
+
+
+// get single data
+app.get('/blogs/:id', async(req, res) => {
+    const id = req.params.id
+    const blogsData =  await blogsCollection.findOne({_id: new ObjectId(id)});
+    res.send(blogsData);
+})
+
+
+
 
     console.log("Database is connected");
   } finally {
