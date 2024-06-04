@@ -51,6 +51,29 @@ app.get('/blogs/:id', async(req, res) => {
 })
 
 
+// update
+app.patch('/blogs/:id', async(req, res) => {
+    const id = req.params.id
+    const updatedData = req.body ;
+
+    const result =  await blogsCollection.updateOne(
+      { _id: new ObjectId(id) },  
+      { $set:updatedData  }  
+      
+    );
+    res.send(result);
+})
+
+// delete
+app.delete('/blogs/:id', async(req, res) => {
+    const id = req.params.id
+    const result =  await blogsCollection.deleteOne(
+      { _id: new ObjectId(id) },  
+    );
+    res.send(result);
+})
+
+
 
 
     console.log("Database is connected");
