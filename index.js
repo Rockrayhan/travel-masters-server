@@ -101,6 +101,18 @@ app.get('/user/:email', async(req, res) => {
 })
 
 
+// update user
+app.patch('/user/:email', async(req, res) => {
+  const email = req.params.email ;
+  const userData = req.body ;
+  const result =  await userCollection.updateOne(
+    { email },
+    {$set : userData},
+    { upsert: true });
+  res.send(result);
+})
+
+
 
 
 
