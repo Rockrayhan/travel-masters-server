@@ -1,14 +1,23 @@
-const express = require('express') ;
-const cors = require('cors') ;
-require("dotenv").config() ;
+// const express = require('express') ;
+// const cors = require('cors') ;
+// require("dotenv").config() ;
+// const app = express();
+// const port = process.env.PORT  ;
+// app.use(cors()) ;
+// app.use(express.json()) ;
+// const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+
+
+const express = require("express");
 const app = express();
-const port = process.env.PORT  ;
-app.use(cors()) ;
-app.use(express.json()) ;
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-
-
-
+const cors = require("cors");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+// env config
+const env = require("dotenv");
+env.config();
+const port = process.env.PORT;
+app.use(cors());
+app.use(express.json());
 
 const uri = process.env.DB_URI;
 
