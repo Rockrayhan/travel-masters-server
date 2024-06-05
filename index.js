@@ -37,12 +37,34 @@ app.post('/blogs', async(req, res) => {
     res.send(result);
 }) ;
 
-// get data
+// get all data
 app.get('/blogs', async(req, res) => {
     const blogsData =  blogsCollection.find();
     const result = await blogsData.toArray() ;
     res.send(result);
 })
+
+// get data by user email
+
+app.get('/myblogs', async (req, res) => {
+  const email = req.query.email;
+  console.log('Query email:', email);  // Debugging line
+  if (email) {
+      const blogsData = blogsCollection.find({ email }); // Use the correct field name
+      const result = await blogsData.toArray();
+      console.log('Found blogs:', result);  // Debugging line
+      res.send(result);
+  } else {
+      res.status(400).send({ message: 'Email query parameter is required' });
+  }
+});
+
+
+
+
+
+
+
 
 
 // get single data
