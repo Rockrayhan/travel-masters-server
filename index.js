@@ -25,6 +25,8 @@ async function run() {
     await client.connect();
     const blogDB = client.db("blogDB");
     const blogsCollection = blogDB.collection("blogsCollection");
+    const userDB = client.db("userDB");
+    const userCollection = userDB.collection("userCollection") ;
 
 //=====  product routes =======
 
@@ -74,6 +76,22 @@ app.delete('/blogs/:id', async(req, res) => {
 })
 
 
+// ========= user routes =========
+
+// add user
+app.post('/user', async(req, res) => {
+  const user = req.body ;
+  const isUserExist = await userCollection.findOne({ email: user?.email }) ;
+  if (isUserExist?._id){
+    return res.send ({
+      status: "success",
+      message: "Login Success",
+    });
+  }
+  const result = await userCollection.insertOne(user);
+  res.send(result);
+}) ;
+
 
 
     console.log("Database is connected");
@@ -95,6 +113,3 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-
-// khayrulalamdict
-// AdrN0sAmVR43ne6K
